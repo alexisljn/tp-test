@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : database
--- Généré le : Dim 12 avr. 2020 à 08:56
+-- Généré le : Dim 12 avr. 2020 à 09:30
 -- Version du serveur :  10.4.11-MariaDB-1:10.4.11+maria~bionic
 -- Version de PHP : 7.4.1
 
@@ -25,16 +25,27 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `user`
+-- Structure de la table `admin`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `contact`
+--
+
+CREATE TABLE `contact` (
   `id` int(11) NOT NULL,
   `firstname` varchar(70) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lastname` varchar(70) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone_number` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `role` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:simple_array)'
+  `phone_number` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -42,9 +53,15 @@ CREATE TABLE `user` (
 --
 
 --
--- Index pour la table `user`
+-- Index pour la table `admin`
 --
-ALTER TABLE `user`
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `contact`
+--
+ALTER TABLE `contact`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -52,9 +69,15 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT pour la table `user`
+-- AUTO_INCREMENT pour la table `admin`
 --
-ALTER TABLE `user`
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `contact`
+--
+ALTER TABLE `contact`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 

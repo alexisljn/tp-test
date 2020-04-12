@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ContactRepository")
  */
-class User
+class Contact
 {
     /**
      * @ORM\Id()
@@ -35,11 +35,6 @@ class User
      * @ORM\Column(type="string", length=15, nullable=true)
      */
     private $phoneNumber;
-
-    /**
-     * @ORM\Column(type="simple_array")
-     */
-    private $role = [];
 
     public function getId(): ?int
     {
@@ -90,18 +85,6 @@ class User
     public function setPhoneNumber(?string $phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
-
-        return $this;
-    }
-
-    public function getRole(): ?array
-    {
-        return $this->role;
-    }
-
-    public function setRole(array $role): self
-    {
-        $this->role = $role;
 
         return $this;
     }
