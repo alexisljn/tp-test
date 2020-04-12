@@ -35,7 +35,7 @@ class ContactController extends AbstractController
             try {
                 $contact->isContactInputValid($contactManager);
                 $contactManager->manageContact($contact);
-                return $this->redirectToRoute('show-contacts'); // Redir à changer quand show contact
+                return $this->redirectToRoute('update_contact', ['id' => $contact->getId()]);
             } catch (\Exception $e) {
                 $error = $e->getMessage();
             }
@@ -83,5 +83,17 @@ class ContactController extends AbstractController
             'form' => $updateForm->createView(),
             'error' => $error
         ]);
+    }
+
+    /**
+     * @Route("/contact/delete/{id}", name="delete_contact")
+     * @param Contact $contact
+     * @param ContactManager $contactManager
+     */
+    public function deleteContact(Contact $contact, ContactManager $contactManager)
+    {
+        $contactManager->deleteContact($contact);
+
+        return $this->redirectToRoute('show-contacts');
     }
 }

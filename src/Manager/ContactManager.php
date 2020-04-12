@@ -30,4 +30,10 @@ class ContactManager
         $this->entityManager->persist($contact);
         $this->entityManager->flush();
     }
+
+    public function deleteContact(Contact $contact)
+    {
+        $this->entityManager->remove($contact);
+        $this->entityManager->flush();
+    }
 }
