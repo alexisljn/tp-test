@@ -31,11 +31,10 @@ class ContactController extends AbstractController
         $createForm->handleRequest($request);
 
         if ($createForm->isSubmitted() && $createForm->isValid()) {
-
             try {
                 $contact->isContactInputValid($contactManager);
                 $contactManager->createContact($contact);
-                return $this->redirectToRoute('list'); // Redir à changer quand liste des contacts faites
+                return $this->redirectToRoute('show-contacts'); // Redir à changer quand show contact
             } catch (\Exception $e) {
                 $error = $e->getMessage();
             }
@@ -44,6 +43,19 @@ class ContactController extends AbstractController
         return $this->render('contact/create-contact.html.twig', [
             'form' => $createForm->createView(),
             'error' => $error
+        ]);
+    }
+
+    /**
+     * @Route("/", name="show-contacts")
+     * @param ContactManager $contactManager
+     */
+    public function showContacts(ContactManager $contactManager)
+    {
+        $contacts = $contactManager->getContacts();
+
+        return $this->render('contact/show-contacts.html.twig', [
+            'contacts' => $contacts
         ]);
     }
 }
