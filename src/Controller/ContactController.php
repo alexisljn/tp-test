@@ -24,16 +24,17 @@ class ContactController extends AbstractController
     /**
      * @Route("/contact/create", name="create-contact")
      */
-    public function createContact(Request $request, string $error = null, ContactManager $contactManager)
+    public function createContact(Request $request, ContactManager $contactManager)
     {
         $contact = new Contact();
         $createForm = $this->createForm(ManageContactType::class, $contact);
         $createForm->handleRequest($request);
+        $error = null;
 
         if ($createForm->isSubmitted() && $createForm->isValid()) {
             try {
                 $contact->isContactInputValid($contactManager);
-                $contactManager->createContact($contact);
+                $contactManager->manageContact($contact);
                 return $this->redirectToRoute('show-contacts'); // Redir à changer quand show contact
             } catch (\Exception $e) {
                 $error = $e->getMessage();
@@ -56,6 +57,31 @@ class ContactController extends AbstractController
 
         return $this->render('contact/show-contacts.html.twig', [
             'contacts' => $contacts
+        ]);
+    }
+
+    /**
+     * @Route("/contact/update/{id}", name="update_contact")
+     */
+    public function updateContact(Request $request ,Contact $contact, ContactManager $contactManager)
+    {
+        $updateForm = $this->createForm(ManageContactType::class, $contact);
+        $updateForm->handleRequest($request);
+        $error = null;
+
+        if ($updateForm->isSubmitted() && $updateForm->isValid()) {
+            try {
+                $contact->isContactInputValid($contactManager);
+                $contactManager->manageContact($contact);
+                return $this->redirectToRoute('update_contact', ['id' => $contact->getId()]);
+            } catch (\Exception $e) {
+                $error = $e->getMessage();
+            }
+        }
+
+        return $this->render('contact/update-contact.html.twig', [
+            'form' => $updateForm->createView(),
+            'error' => $error
         ]);
     }
 }
