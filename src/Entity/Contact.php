@@ -29,12 +29,14 @@ class Contact
     /**
      * @ORM\Column(type="string", length=70)
      * @Assert\NotBlank()
+     * @Assert\NotNull()
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=70)
      * @Assert\NotBlank()
+     * @Assert\NotNull()
      */
     private $lastname;
 
@@ -167,6 +169,7 @@ class Contact
         $this->isContactMailUnique($contactManager);
     }
 
+
     /**
      * Verify is contact's mail is unique
      *
@@ -179,8 +182,10 @@ class Contact
 
         foreach ($contacts as $contact)
         {
-            if ($this->getEmail() === $contact->getEmail()) {
-                throw new AlreadyRegisteredEmailException('This email is already registered');
+            if ($this->getId() !== $contact->getId()) {
+                if ($this->getEmail() === $contact->getEmail()) {
+                    throw new AlreadyRegisteredEmailException('This email is already registered');
+                }
             }
         }
     }
@@ -213,8 +218,10 @@ class Contact
 
         foreach ($contacts as $contact)
         {
-            if ($this->getPhoneNumber() === $contact->getPhoneNumber()) {
-                throw new AlreadyRegisteredEmailException('This email is already registered');
+            if ($this->getId() !== $contact->getId()) {
+                if ($this->getPhoneNumber() === $contact->getPhoneNumber()) {
+                    throw new AlreadyRegisteredEmailException('This email is already registered');
+                }
             }
         }
     }

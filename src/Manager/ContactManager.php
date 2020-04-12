@@ -25,7 +25,7 @@ class ContactManager
         return $this->contactRepository->findAll();
     }
 
-    public function createContact(Contact $contact)
+    public function manageContact(Contact $contact)
     {
         $this->entityManager->persist($contact);
         $this->entityManager->flush();
