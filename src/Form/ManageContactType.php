@@ -19,7 +19,9 @@ class ManageContactType extends AbstractType
             ->add('firstname', TextType::class)
             ->add('lastname', TextType::class)
             ->add('email', EmailType::class)
-            ->add('phoneNumber', TelType::class)
+            ->add('phoneNumber', TelType::class, [
+                'required' => false
+            ])
             ->add('submit', SubmitType::class)
         ;
     }
