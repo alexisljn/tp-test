@@ -2,12 +2,10 @@
 
 namespace App\Entity;
 
-use App\Exception\AlreadyRegisteredEmailException;
 use App\Exception\InvalidMailException;
 use App\Exception\InvalidNameException;
 use App\Exception\InvalidPhoneNumberException;
 use App\Exception\TooLongNameException;
-use App\Manager\ContactManager;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -107,21 +105,16 @@ class Contact
     /**
      * Verify if contact's inputs are valid
      *
-     * @param ContactManager $contactManager
-     * @return bool
      * @throws InvalidMailException
      * @throws InvalidNameException
      * @throws InvalidPhoneNumberException
      * @throws TooLongNameException
-     * @throws AlreadyRegisteredEmailException
      */
-    public function isContactInputValid(ContactManager $contactManager)
+    public function isContactInputValid()
     {
         $this->isContactNameValid();
-        $this->isContactMailValid($contactManager);
-        $this->isContactPhoneNumberValid($contactManager);
-
-        return true;
+        $this->isContactMailValid();
+        $this->isContactPhoneNumberValid();
     }
 
     /**
@@ -130,11 +123,9 @@ class Contact
      * @throws InvalidNameException
      * @throws TooLongNameException
      */
-    private function isContactNameValid()
+    public function isContactNameValid()
     {
-        if ((empty($this->getFirstname()) || is_null($this->getFirstname()))
-            ||
-            (empty($this->getLastname()) || is_null($this->getLastname()))) {
+        if (empty($this->getFirstname()) || empty($this->getLastname())) {
             throw new InvalidNameException('Firstname and/or Lastname is not correct');
         }
 
@@ -146,7 +137,7 @@ class Contact
      *
      * @throws TooLongNameException
      */
-    private function isContactNameTooLong()
+    public function isContactNameTooLong()
     {
         if (strlen($this->getFirstname()) > self::MAX_NAME_LENGTH || strlen($this->getLastname()) > self::MAX_NAME_LENGTH) {
             throw new TooLongNameException('Firstname and/or Lastname is too long');
@@ -156,73 +147,27 @@ class Contact
     /**
      * Verify if contact mail is valid
      *
-     * @param ContactManager $contactManager
      * @throws InvalidMailException
-     * @throws AlreadyRegisteredEmailException
      */
-    private function isContactMailValid(ContactManager $contactManager)
+    public function isContactMailValid()
     {
         if (!filter_var($this->getEmail(), FILTER_VALIDATE_EMAIL)) {
             throw new InvalidMailException('Email is not correct');
-        }
-
-        $this->isContactMailUnique($contactManager);
-    }
-
-
-    /**
-     * Verify is contact's mail is unique
-     *
-     * @param ContactManager $contactManager
-     * @throws AlreadyRegisteredEmailException
-     */
-    private function isContactMailUnique(ContactManager $contactManager)
-    {
-        $contacts = $contactManager->getContacts();
-
-        foreach ($contacts as $contact)
-        {
-            if ($this->getId() !== $contact->getId()) {
-                if ($this->getEmail() === $contact->getEmail()) {
-                    throw new AlreadyRegisteredEmailException('This email is already registered');
-                }
-            }
         }
     }
 
     /**
      * Verify if contact's phone number is valid
      *
-     * @param ContactManager $contactManager
-     * @throws AlreadyRegisteredEmailException
      * @throws InvalidPhoneNumberException
      */
-    private function isContactPhoneNumberValid(ContactManager $contactManager)
+    public function isContactPhoneNumberValid()
     {
         if (preg_match('/^\d{10}/', $this->getPhoneNumber()) ==! 1
             ||
             strlen($this->getPhoneNumber()) > self::MAX_PHONE_LENGTH) {
            throw new InvalidPhoneNumberException('Phone number is not correct');
         }
-
-        $this->isContactPhoneNumberUnique($contactManager);
     }
 
-    /**
-     * @param ContactManager $contactManager
-     * @throws AlreadyRegisteredEmailException
-     */
-    private function isContactPhoneNumberUnique(ContactManager $contactManager)
-    {
-        $contacts = $contactManager->getContacts();
-
-        foreach ($contacts as $contact)
-        {
-            if ($this->getId() !== $contact->getId()) {
-                if ($this->getPhoneNumber() === $contact->getPhoneNumber()) {
-                    throw new AlreadyRegisteredEmailException('This email is already registered');
-                }
-            }
-        }
-    }
 }
