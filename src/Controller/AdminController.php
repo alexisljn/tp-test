@@ -15,11 +15,6 @@ class AdminController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils)
     {
-        // Penser dans la navbar à faire un switch entre le bouton logout et le bouton login
-        // Afficher le form
-        // Si le form est envoyé, le traiter
-        // Rediriger vers la page d'accueil
-
         $admin = new Admin();
         $loginForm = $this->createForm(LoginType::class, $admin);
 

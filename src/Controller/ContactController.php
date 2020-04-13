@@ -13,17 +13,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class ContactController extends AbstractController
 {
     /**
-     * @Route("/contact", name="contact")
-     */
-    public function index()
-    {
-        return $this->render('contact/index.html.twig', [
-            'controller_name' => 'ContactController',
-        ]);
-    }
-
-    /**
      * @Route("/contact/create", name="create-contact")
+     * @param Request $request
+     * @param ContactManager $contactManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function createContact(Request $request, ContactManager $contactManager)
     {
@@ -57,6 +50,7 @@ class ContactController extends AbstractController
     /**
      * @Route("/", name="show-contacts")
      * @param ContactManager $contactManager
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showContacts(ContactManager $contactManager)
     {
@@ -96,6 +90,7 @@ class ContactController extends AbstractController
      * @Route("/contact/delete/{email}", name="delete_contact")
      * @param Contact $contact
      * @param ContactManager $contactManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteContact(Contact $contact, ContactManager $contactManager)
     {
