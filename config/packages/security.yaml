@@ -23,7 +23,7 @@ security:
                 password_parameter: 'login[password]'
             logout:
                 path: logout
-                target: /
+                target: /login
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -35,4 +35,6 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
          - { path: ^/contact, roles: IS_AUTHENTICATED_REMEMBERED }
-        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/, roles: IS_AUTHENTICATED_REMEMBERED }
+
