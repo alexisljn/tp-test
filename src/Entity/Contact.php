@@ -114,7 +114,11 @@ class Contact
     {
         $this->isContactNameValid();
         $this->isContactMailValid();
-        $this->isContactPhoneNumberValid();
+
+        if (!is_null($this->phoneNumber)) {
+            $this->isContactPhoneNumberValid();
+        }
+
     }
 
     /**

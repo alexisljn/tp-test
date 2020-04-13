@@ -27,7 +27,7 @@ class ContactController extends AbstractController
 
         if ($createForm->isSubmitted() && $createForm->isValid()) {
             try {
-                $contact->isContactInputValid($contactManager);
+                $contact->isContactInputValid();
                 $contactManager->manageContact($contact);
                 return $this->redirectToRoute('update_contact', ['email' => $contact->getEmail()]);
             } catch (\Exception $e) {
@@ -72,7 +72,7 @@ class ContactController extends AbstractController
 
         if ($updateForm->isSubmitted() && $updateForm->isValid()) {
             try {
-                $contact->isContactInputValid($contactManager);
+                $contact->isContactInputValid();
                 $contactManager->manageContact($contact);
                 return $this->redirectToRoute('update_contact', ['email' => $contact->getEmail()]);
             } catch (\Exception $e) {

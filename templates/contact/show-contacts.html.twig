@@ -1,14 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ContactController!{% endblock %}
+{% block title %}Contacts{% endblock %}
 
 {% block body %}
-    <h1>Contacts</h1>
-    {% for contact in contacts %}
-        <div style="border: black 2px solid; margin-bottom: 10px;">
-            <p>{{ contact.firstname }} {{ contact.lastname }}</p>
-            <p>{{ contact.email }} {{ contact.phoneNumber }}</p>
-            <p><a href="{{ path('update_contact', {'email': contact.email}) }}">Edit</a> <a href="{{ path('delete_contact', {'email': contact.email}) }}">Delete</a></p>
+    <div class="container-fluid">
+        <div class="row mb-5 mt-3">
+            <div class="col-12">
+                <h1 class="h1">Contacts</h1>
+            </div>
         </div>
-    {% endfor %}
+        <div class="row">
+            <div class="col-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Firstname</th>
+                        <th scope="col">Lastname</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone number</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for contact in contacts %}
+                        <tr>
+                            <td>{{ contact.firstname }}</td>
+                            <td>{{ contact.lastname }}</td>
+                            <td>{{ contact.email }}</td>
+                            <td>{{ contact.phoneNumber }}</td>
+                            <td>
+                                <a class="btn btn-primary" href="{{ path('update_contact', {'email': contact.email}) }}">Edit</a>
+                                <a class="btn btn-danger" href="{{ path('delete_contact', {'email': contact.email}) }}">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}

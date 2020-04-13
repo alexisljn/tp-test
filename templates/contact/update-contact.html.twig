@@ -3,11 +3,42 @@
 {% block title %}Hello ContactController!{% endblock %}
 
 {% block body %}
-    <h1>Update contact</h1>
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+    <div class="container-fluid">
+        <div class="row mb-5 mt-3">
+            <div class="col-12">
+                <h1>Update contact</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                {{ form_start(form) }}
+                <div class="form-group">
+                    {{ form_label(form.firstname, 'Contact\'s firtname') }}
+                    {{ form_widget(form.firstname, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.lastname, 'Contact\'s lastname') }}
+                    {{ form_widget(form.lastname, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.email, 'Contact\'s email') }}
+                    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.phoneNumber, 'Contact\'s phone number') }}
+                    {{ form_widget(form.phoneNumber, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
     {% if error %}
-        <p>{{ error }}</p>
+    <div class="row mt-3">
+        <div class="col-12">
+            <p>{{ error }}</p>
+        </div>
+    </div>
     {% endif %}
 {% endblock %}
