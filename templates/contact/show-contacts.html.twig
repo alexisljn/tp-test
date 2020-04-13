@@ -8,7 +8,7 @@
         <div style="border: black 2px solid; margin-bottom: 10px;">
             <p>{{ contact.firstname }} {{ contact.lastname }}</p>
             <p>{{ contact.email }} {{ contact.phoneNumber }}</p>
-            <p><a href="{{ path('update_contact', {'id': contact.id}) }}">Edit</a> <a href="{{ path('delete_contact', {'id': contact.id}) }}">Delete</a></p>
+            <p><a href="{{ path('update_contact', {'email': contact.email}) }}">Edit</a> <a href="{{ path('delete_contact', {'email': contact.email}) }}">Delete</a></p>
         </div>
     {% endfor %}
 {% endblock %}

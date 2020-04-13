@@ -36,7 +36,7 @@ class ContactController extends AbstractController
             try {
                 $contact->isContactInputValid($contactManager);
                 $contactManager->manageContact($contact);
-                return $this->redirectToRoute('update_contact', ['id' => $contact->getId()]);
+                return $this->redirectToRoute('update_contact', ['email' => $contact->getEmail()]);
             } catch (\Exception $e) {
                 $error = $e->getMessage();
 
@@ -68,7 +68,7 @@ class ContactController extends AbstractController
     }
 
     /**
-     * @Route("/contact/update/{id}", name="update_contact")
+     * @Route("/contact/update/{email}", name="update_contact")
      */
     public function updateContact(Request $request ,Contact $contact, ContactManager $contactManager)
     {
@@ -80,7 +80,7 @@ class ContactController extends AbstractController
             try {
                 $contact->isContactInputValid($contactManager);
                 $contactManager->manageContact($contact);
-                return $this->redirectToRoute('update_contact', ['id' => $contact->getId()]);
+                return $this->redirectToRoute('update_contact', ['email' => $contact->getEmail()]);
             } catch (\Exception $e) {
                 $error = $e->getMessage();
             }
@@ -93,7 +93,7 @@ class ContactController extends AbstractController
     }
 
     /**
-     * @Route("/contact/delete/{id}", name="delete_contact")
+     * @Route("/contact/delete/{email}", name="delete_contact")
      * @param Contact $contact
      * @param ContactManager $contactManager
      */
