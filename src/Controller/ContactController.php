@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Contact;
 use App\Form\ManageContactType;
 use App\Manager\ContactManager;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,6 +39,12 @@ class ContactController extends AbstractController
                 return $this->redirectToRoute('update_contact', ['id' => $contact->getId()]);
             } catch (\Exception $e) {
                 $error = $e->getMessage();
+
+                if ($e instanceof UniqueConstraintViolationException)
+                {
+                    $param = (explode(' ', explode('entry ', $e->getMessage())[1])[0]);
+                    $error = $param . ' is already registered by a user';
+                }
             }
         }
 
